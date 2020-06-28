@@ -17,5 +17,20 @@ export class ShopService {
   findAll() : Promise<Shop[]> {
     return this.storageService.getItems(KEY_STORAGE);     
   }
+
+  save(shop: Shop) : Promise<void> {
+    if (shop.id) {
+      return this.update(shop);
+    } else {      
+      return this.create(shop);
+    }
+  }
+
+  private create(shop: Shop) : Promise<void> {    
+    return this.storageService.addItem(KEY_STORAGE, shop);
+  }
   
+  private update(shop: Shop) : Promise<void> {
+    return null;
+  }
 }

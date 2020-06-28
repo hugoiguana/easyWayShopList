@@ -8,12 +8,16 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'shop/list',
+    redirectTo: 'shop',
     pathMatch: 'full'
   },
   {
-    path: 'shop/list',
+    path: 'shop',
     loadChildren: () => import('./page/shop-list/shop-list.module').then( m => m.ShopListPageModule)
+  },
+  {
+    path: 'shop/add',
+    loadChildren: () => import('./page/shop-add/shop-add.module').then( m => m.ShopAddPageModule)
   },
 ];
 

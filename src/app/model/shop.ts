@@ -1,12 +1,21 @@
-export class Shop {
+import { Persistent } from './persistent';
+
+export class Shop extends Persistent {
     
-    id: string;
     name: string;
     dtCriation: Date;
     dtModification: Date
 
-    static of() : Shop {
+    static empty() : Shop {
         return new Shop();
+    }
+
+    static of(name: string) : Shop {
+        let shop = new Shop();
+        shop.name = name;
+        shop.dtCriation = new Date();
+        shop.dtModification = new Date();
+        return shop;
     }
 
 }

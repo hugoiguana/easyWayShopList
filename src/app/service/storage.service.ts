@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Plugins } from '@capacitor/core';
+import { v4 as uuidv4} from 'uuid';
 
 import { Persistent } from '../model/persistent';
 
@@ -18,9 +19,9 @@ export class StorageService {
     return JSON.parse(ret.value);
   }
 
-  async addItem(key: string, item: Persistent) : Promise<any> {   
+  async addItem(key: string, item: Persistent) : Promise<void> {   
     if (!item.id) {
-      item.id = '12345dadahdjahkj';
+      item.id = uuidv4();
     }
     Storage.get({ key: key }).then(i => {
       let items: Persistent[] = JSON.parse(i.value);
