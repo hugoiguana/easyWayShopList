@@ -26,11 +26,16 @@ export class ShopService {
     }
   }
 
-  private create(shop: Shop) : Promise<void> {    
+  private create(shop: Shop) : Promise<void> {        
     return this.storageService.addItem(KEY_STORAGE, shop);
   }
   
   private update(shop: Shop) : Promise<void> {
     return null;
   }
+
+  delete(idOff: string) : Promise<void> {
+    return this.storageService.deleteItem(KEY_STORAGE, idOff);
+  }
+
 }

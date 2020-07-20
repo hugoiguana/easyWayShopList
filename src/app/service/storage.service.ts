@@ -20,19 +20,28 @@ export class StorageService {
   }
 
   async addItem(key: string, item: Persistent) : Promise<void> {   
-    if (!item.id) {
-      item.id = uuidv4();
+    if (!item.idOff) {
+      item.idOff = uuidv4();
     }
     Storage.get({ key: key }).then(i => {
       let items: Persistent[] = JSON.parse(i.value);
-      console.log('saving items = ' + items)
       if (!items) {
         items = [];
       }
-      items.push(item);
+      items.push(item);      
       return Storage.set({key: key, value: JSON.stringify(items)});
     });
   }
+
+  async deleteItem(key: string, idOff: string) : Promise<void> {    
+    Storage.get({ key: key }).then(i => {
+      let items: Persistent[] = JSON.parse(i.value);
+      if (items) {        
+        const itemsToSave = items.filter(i => i.idOff !== idOff );
+        return Storage.set({key: key, value: JSON.stringify(itemsToSave)});        
+      }      
+    });  
+  } 
 
  /*  async updateItem(item: Shop) : Promise<any> {       
     await Storage.get({ key: KEY_STORAGE }).then(i => {

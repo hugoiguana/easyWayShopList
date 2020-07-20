@@ -15,7 +15,7 @@
         <ion-item-option [routerLink]="['edit', shop.id]">
           <ion-icon slot="icon-only" name="create" color="secondary"></ion-icon>
         </ion-item-option>
-        <ion-item-option (click)="delete(shop)">
+        <ion-item-option (click)="delete(shop.idOff)">
           <ion-icon slot="icon-only" name="trash" color="danger"></ion-icon>
         </ion-item-option>
       </ion-item-options>

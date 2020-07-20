@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 import { Shop } from 'src/app/model/shop';
 import { ShopService } from 'src/app/service/shop.service';
-import { StorageService } from 'src/app/service/storage.service';
 
 @Component({
   selector: 'app-shop-list',
@@ -13,37 +13,49 @@ export class ShopListPage implements OnInit {
 
   shops : Shop[] = [];
 
-  constructor(private service : ShopService, private storageService: StorageService) { }
+  constructor(public alertController: AlertController
+    , private service : ShopService
+    ) { }
 
   ngOnInit() {
-
-    console.log('inicio')
-    const shop = {
-      'id': '1',
-      'name': 'Feira do mês',
-      'dtCriation': null,
-      'dtModification': null,
-    } as Shop;
-
-    this.storageService.clear();
-
- /*    this.service.addItem(shop).then(x => {
-       this.service.findAll().then(i => {
-          this.shops = i as Shop[];
-        });
-    }); */
    
   }
 
-  delete() {
+  
+  async delete(idOff: string) {          
 
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        header: 'Atenção',
+        subHeader: '',
+        message: 'Confirma exclusão?',
+        buttons: [
+          {
+            text: 'Não',
+            role: 'cancel',
+            cssClass: 'secondary',
+          }, {
+            text: 'Sim',
+            handler: () => {
+              this.service.delete(idOff).then(i => {    
+                this.loadShops();
+              });
+            }
+          }
+        ]
+      });
+  
+      await alert.present();
+  } 
+
+  loadShops() {
+    this.service.findAll().then(i => {
+      this.shops = i as Shop[];
+    });
   }
 
   ionViewDidEnter() {
-    this.service.findAll().then(i => {
-      this.shops = i as Shop[];
-      //this.shops.forEach(x => console.log(x));
-    });
+    this.loadShops();
   }
 
 }
