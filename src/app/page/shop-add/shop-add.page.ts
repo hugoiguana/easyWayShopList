@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ShopService } from 'src/app/service/shop.service';
 import { Shop } from 'src/app/model/shop';
+import { LoadingService } from 'src/app/service/common/loading.service';
 
 @Component({
   selector: 'app-shop-add',
@@ -16,7 +17,8 @@ export class ShopAddPage implements OnInit {
 
   constructor(private router: Router
     , private route: ActivatedRoute
-    , private service : ShopService) { 
+    , private service : ShopService
+    , public loading: LoadingService) { 
   }
 
   ngOnInit() {
@@ -33,9 +35,11 @@ export class ShopAddPage implements OnInit {
 
   }
 
-  onSubmit() {
+  async onSubmit() {
+    await this.loading.show();
     let shop = Shop.of(this.idOff, this.shopName);
     this.service.save(shop).then(x => {
+      this.loading.hide();
       this.router.navigate(['shop']);      
     });
   }

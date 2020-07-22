@@ -3,6 +3,7 @@ import { AlertController } from '@ionic/angular';
 
 import { Shop } from 'src/app/model/shop';
 import { ShopService } from 'src/app/service/shop.service';
+import { LoadingService } from 'src/app/service/common/loading.service';
 
 @Component({
   selector: 'app-shop-list',
@@ -14,6 +15,7 @@ export class ShopListPage implements OnInit {
   shops : Shop[] = [];
 
   constructor(public alertController: AlertController
+    , public loading: LoadingService
     , private service : ShopService
     ) { }
 
@@ -25,7 +27,6 @@ export class ShopListPage implements OnInit {
   async delete(idOff: string) {          
 
       const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
         header: 'Atenção',
         subHeader: '',
         message: 'Confirma exclusão?',
@@ -47,10 +48,13 @@ export class ShopListPage implements OnInit {
   
       await alert.present();
   } 
+  
 
-  loadShops() {
+  async loadShops() {
+   await this.loading.show();
     this.service.findAll().then(i => {
       this.shops = i as Shop[];
+      this.loading.hide();
     });
   }
 
