@@ -14,12 +14,16 @@ export class ShopService {
 
   }
 
+  findByIdOff(idOff: string) : Promise<Shop> {
+    return this.storageService.getItemByIdOff(KEY_STORAGE, idOff);
+  }
+
   findAll() : Promise<Shop[]> {
     return this.storageService.getItems(KEY_STORAGE);     
   }
 
   save(shop: Shop) : Promise<void> {
-    if (shop.id) {
+    if (shop.idOff) {
       return this.update(shop);
     } else {      
       return this.create(shop);
@@ -31,7 +35,7 @@ export class ShopService {
   }
   
   private update(shop: Shop) : Promise<void> {
-    return null;
+    return this.storageService.updateItem(KEY_STORAGE, shop);
   }
 
   delete(idOff: string) : Promise<void> {

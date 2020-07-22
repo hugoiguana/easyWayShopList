@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
 import { ShopService } from 'src/app/service/shop.service';
 import { Shop } from 'src/app/model/shop';
 
@@ -11,24 +11,30 @@ import { Shop } from 'src/app/model/shop';
 })
 export class ShopAddPage implements OnInit {
 
-  formShop : FormGroup;
+  idOff: string;
   shopName: string;
 
   constructor(private router: Router
-    , private fb : FormBuilder
+    , private route: ActivatedRoute
     , private service : ShopService) { 
-
-      this.formShop =  this.fb.group({
-        name: this.fb.control('', Validators.required)      
-      });
-
-    }
+  }
 
   ngOnInit() {
+
+    this.route.paramMap.subscribe(params => {
+      this.idOff = params.get('idoff');      
+      this.service.findByIdOff(this.idOff).then(x => {
+        if (x) {
+          const shop = x as Shop;
+          this.shopName = shop.name;
+        }
+      });
+    });
+
   }
 
   onSubmit() {
-    const shop = Shop.of(this.shopName);
+    let shop = Shop.of(this.idOff, this.shopName);
     this.service.save(shop).then(x => {
       this.router.navigate(['shop']);      
     });

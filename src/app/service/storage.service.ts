@@ -13,6 +13,12 @@ const { Storage } = Plugins;
 export class StorageService {
 
   constructor() { }
+  
+  async getItemByIdOff<T>(key: string, idOff: string) : Promise<T> {
+    const ret = await Storage.get({ key: key });
+    const items = JSON.parse(ret.value); 
+    return items.find(i => i.idOff === idOff);
+  }
 
   async getItems<T>(key: string) : Promise<T[]> {
     const ret = await Storage.get({ key: key });
@@ -33,6 +39,11 @@ export class StorageService {
     });
   }
 
+  async updateItem(key: string, item: Persistent) : Promise<void> {  
+    await this.deleteItem(key, item.idOff);
+    return this.addItem(key, item);  
+  }
+
   async deleteItem(key: string, idOff: string) : Promise<void> {    
     Storage.get({ key: key }).then(i => {
       let items: Persistent[] = JSON.parse(i.value);
@@ -42,41 +53,6 @@ export class StorageService {
       }      
     });  
   } 
-
- /*  async updateItem(item: Shop) : Promise<any> {       
-    await Storage.get({ key: KEY_STORAGE }).then(i => {
-      let items: Shop[] = JSON.parse(i.value);
-      if (!items || items.length === 0) {
-        return null;
-      }
-      let newItems : Shop[] = [];
-      items.forEach(i => {
-        if (i.id === item.id) {
-          newItems.push(item);
-        } else {
-          newItems.push(i);
-        }          
-      });
-
-      return Storage.set({key: KEY_STORAGE, value: JSON.stringify(newItems)});
-    });
-  }
-
-  async deleteItem(item: Shop) : Promise<any> {       
-    await Storage.get({ key: KEY_STORAGE }).then(i => {
-      let items: Shop[] = JSON.parse(i.value);
-      if (!items || items.length === 0) {
-        return null;
-      }
-      let itemsToKeep : Shop[] = [];
-      items.forEach(i => {
-        if (i.id !== item.id) {
-          itemsToKeep.push(item);
-        }          
-      });
-      return Storage.set({key: KEY_STORAGE, value: JSON.stringify(itemsToKeep)});
-    });
-  } */
 
   async clear() {
     await Storage.clear();

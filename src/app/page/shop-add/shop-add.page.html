@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>shop-add</ion-title>
+    <ion-title>Nova compra</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/shop/add"></ion-back-button>
     </ion-buttons>     
@@ -11,16 +11,12 @@
 
   <form (ngSubmit)="onSubmit()">
     <ion-item>
-      <ion-label position="stacked">Name</ion-label>
-      <ion-input [(ngModel)]="shopName" name="name" autocapitalize="on" clearInput required></ion-input>
+      <ion-label position="stacked">Descrição</ion-label>
+      <ion-input [(ngModel)]="shopName" name="name" autocapitalize="on" autofocus="true" clearInput required></ion-input>
     </ion-item>
     <div class="ion-margin-vertical">
-      <ion-button type="submit" color="secondary" expand="block">Save</ion-button>
+      <ion-button type="submit" color="secondary" expand="block">Salvar</ion-button>
     </div>
   </form>
-
-  <!-- <ion-button color="primary" expand="block" [disabled]="!formShop.valid" (click)="save()">
-    Gravar
-  </ion-button> -->
 
 </ion-content>

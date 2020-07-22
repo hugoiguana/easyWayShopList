@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ShopAddPage
+  },
+  {
+    path: ':idoff',
+    component: ShopAddPage
   }
 ];
 

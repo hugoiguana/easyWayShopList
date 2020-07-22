@@ -10,8 +10,9 @@ export class Shop extends Persistent {
         return new Shop();
     }
 
-    static of(name: string) : Shop {
+    static of(idOff?: string, name?: string) : Shop {
         let shop = new Shop();
+        shop.idOff = idOff;
         shop.name = name;
         shop.dtCriation = new Date();
         shop.dtModification = new Date();
