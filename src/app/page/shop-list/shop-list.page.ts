@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
 
 import { Shop } from 'src/app/model/shop';
 import { ShopService } from 'src/app/service/shop.service';
 import { LoadingService } from 'src/app/service/common/loading.service';
+import { AlertService } from 'src/app/service/common/alert.service';
 
 @Component({
   selector: 'app-shop-list',
@@ -14,41 +14,24 @@ export class ShopListPage implements OnInit {
 
   shops : Shop[] = [];
 
-  constructor(public alertController: AlertController
-    , public loading: LoadingService
+  constructor(
+      private loading: LoadingService
+    , private alert: AlertService
     , private service : ShopService
     ) { }
 
   ngOnInit() {
    
   }
-
   
   async delete(idOff: string) {          
-
-      const alert = await this.alertController.create({
-        header: 'Atenção',
-        subHeader: '',
-        message: 'Confirma exclusão?',
-        buttons: [
-          {
-            text: 'Não',
-            role: 'cancel',
-            cssClass: 'secondary',
-          }, {
-            text: 'Sim',
-            handler: () => {
-              this.service.delete(idOff).then(i => {    
-                this.loadShops();
-              });
-            }
-          }
-        ]
-      });
-  
-      await alert.present();
+      const funcAfterDelete = () => {
+        this.service.delete(idOff).then(i => {    
+          this.loadShops();
+        });
+      }
+      await this.alert.confirmDelete(funcAfterDelete);
   } 
-  
 
   async loadShops() {
    await this.loading.show();
