@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Shop } from 'src/app/model/shop';
 import { ShopService } from 'src/app/service/shop.service';
@@ -12,16 +13,22 @@ import { AlertService } from 'src/app/service/common/alert.service';
 })
 export class ShopListPage implements OnInit {
 
-  shops : Shop[] = [];
+  items : Shop[] = [];
 
   constructor(
       private loading: LoadingService
     , private alert: AlertService
     , private service : ShopService
+    , private router: Router
     ) { }
 
   ngOnInit() {
    
+  }
+
+  onClick(idOff: string) {
+    console.log('click', idOff)
+    this.router.navigate(['shop-scheduling', idOff]);   
   }
   
   async delete(idOff: string) {          
@@ -36,7 +43,7 @@ export class ShopListPage implements OnInit {
   async loadShops() {
    await this.loading.show();
     this.service.findAll().then(i => {
-      this.shops = i as Shop[];
+      this.items = i as Shop[];
       this.loading.hide();
     });
   }

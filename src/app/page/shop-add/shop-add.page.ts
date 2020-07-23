@@ -18,7 +18,7 @@ export class ShopAddPage implements OnInit {
   constructor(private router: Router
     , private route: ActivatedRoute
     , private service : ShopService
-    , public loading: LoadingService) { 
+    , private loading: LoadingService) { 
   }
 
   ngOnInit() {
