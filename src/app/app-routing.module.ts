@@ -13,11 +13,11 @@ const routes: Routes = [
   },
   {
     path: 'shop',
-    loadChildren: () => import('./page/shop-list/shop-list.module').then( m => m.ShopListPageModule)
+    loadChildren: () => import('./page/shop/shop-list/shop-list.module').then( m => m.ShopListPageModule)
   },
   {
     path: 'shop/add',
-    loadChildren: () => import('./page/shop-add/shop-add.module').then( m => m.ShopAddPageModule)
+    loadChildren: () => import('./page/shop/shop-add/shop-add.module').then( m => m.ShopAddPageModule)
   },
   {
     path: 'shop-scheduling',
