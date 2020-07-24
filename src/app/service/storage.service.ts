@@ -16,8 +16,11 @@ export class StorageService {
   
   async getItemByIdOff<T>(key: string, idOff: string) : Promise<T> {
     const ret = await Storage.get({ key: key });
-    const items = JSON.parse(ret.value); 
-    return items.find(i => i.idOff === idOff);
+    const items = JSON.parse(ret.value);  
+    if (items) {
+      return items.find(i => i.idOff === idOff);
+    }
+    return null;
   }
 
   async getItems<T>(key: string) : Promise<T[]> {

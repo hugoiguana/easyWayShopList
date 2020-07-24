@@ -2,7 +2,7 @@
   <ion-toolbar color="primary">
     <ion-title>      
       <ion-icon name="list"></ion-icon>
-      Lista de agenda de compras
+      Agenda de compras
     </ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/shop-scheduling/{{shopIdOff}}"></ion-back-button>
@@ -15,7 +15,34 @@
   <ion-list>
     <ion-item-sliding *ngFor="let item of items" >
       <ion-item button (click)="onClick(item.idOff)">
-        <ion-label>{{ item.name }}</ion-label>
+
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6" class="ion-justify-content-start ion-no-margin-vertical ion-no-padding-vertical">
+              <div class="ion-text-start">
+                <ion-icon name="calendar-outline"></ion-icon>
+                {{ item.dtScheduling | date: 'dd/MM/yyyy' }}
+                <ion-icon *ngIf="item.isDone" name="checkmark-circle"></ion-icon>
+              </div>
+            </ion-col>
+            <ion-col size="6" class="ion-no-margin-vertical ion-no-padding-vertical">
+              <div class="ion-text-end currency-positive">
+                {{ item.valueItems | currency:'R$ ' }}
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="3" class="ion-no-margin-vertical ion-no-padding-vertical">
+              <div class="ion-no-margin-vertical ion-no-padding-vertical">
+                <p class="item-comment">
+                  <ion-icon *ngIf="item.comments" name="document-text-outline"></ion-icon>
+                  {{ item.comments }}
+                </p>
+              </div>
+            </ion-col>
+          </ion-row>          
+        </ion-grid>
+
       </ion-item>
       <ion-item-options side="start">
         <ion-item-option [routerLink]="['add', item.idOff]">

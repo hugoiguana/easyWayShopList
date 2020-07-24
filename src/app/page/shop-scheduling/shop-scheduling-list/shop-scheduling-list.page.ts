@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import * as _ from 'lodash';
 
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { AlertService } from 'src/app/service/common/alert.service';
@@ -28,14 +29,12 @@ export class ShopSchedulingListPage implements OnInit {
 
     this.route.paramMap.subscribe(params => {
       this.shopIdOff = params.get('shopIdOff');  
-      console.log('shopIdOff = ', this.shopIdOff)
     });
 
   }
 
-  onClick(idOff: string) {
-    console.log('click', idOff)
-    this.router.navigate(['shopschedule']);   
+  onClick(idOff: string) {    
+    this.router.navigate(['shop-scheduling', 'add', this.shopIdOff, idOff]);   
   }
   
   async delete(idOff: string) {          
@@ -49,8 +48,9 @@ export class ShopSchedulingListPage implements OnInit {
 
   async loadItems() {
    await this.loading.show();
-    this.service.findAll().then(i => {
-      this.items = i as ShopScheduling[];
+    this.service.findAll(this.shopIdOff).then(i => {
+      const itemsOrder = i as ShopScheduling[];
+      this.items = _.orderBy(itemsOrder, 'dtScheduling', 'desc');
       this.loading.hide();
     });
   }

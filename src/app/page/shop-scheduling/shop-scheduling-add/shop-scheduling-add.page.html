@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>      
+      <ion-icon name="calendar-outline"></ion-icon>
+      Agendamento de compra
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/shop-scheduling/{{shopIdOff}}/add/{{idOff}}"></ion-back-button>
+    </ion-buttons>     
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">Data agendamento</ion-label>
+      <ion-datetime [(ngModel)]="dtScheduling" name="dtScheduling" 
+        displayFormat="DD/MM/YYYY" min="1900-01-01" max="2020-12-09" value="2020-07-23:03:46.789" required></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Concluída?</ion-label>
+      <ion-toggle [(ngModel)]="isDone" name="isDone"></ion-toggle>
+    </ion-item>    
+    <ion-item>
+      <ion-label position="floating">Observações</ion-label>
+      <ion-textarea [(ngModel)]="comments" name="comments" autocapitalize="on" autofocus="true" clearInput></ion-textarea>
+    </ion-item>
+
+    <div class="ion-margin-vertical">
+      <ion-button type="submit" color="secondary" expand="block">Salvar</ion-button>
+    </div>
+  </form>
+
+</ion-content>

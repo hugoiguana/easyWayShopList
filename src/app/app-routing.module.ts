@@ -20,9 +20,14 @@ const routes: Routes = [
     loadChildren: () => import('./page/shop/shop-add/shop-add.module').then( m => m.ShopAddPageModule)
   },
   {
-    path: 'shop-scheduling',
+    path: 'shop-scheduling/:shopIdOff',
     loadChildren: () => import('./page/shop-scheduling/shop-scheduling-list/shop-scheduling-list.module').then( m => m.ShopscheduleListPageModule)
   },
+  {
+    path: 'shop-scheduling/:shopIdOff/add',
+    loadChildren: () => import('./page/shop-scheduling/shop-scheduling-add/shop-scheduling-add.module').then( m => m.ShopSchedulingAddPageModule)
+  },
+
 
 ];
 

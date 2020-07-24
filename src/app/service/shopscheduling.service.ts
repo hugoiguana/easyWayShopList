@@ -17,11 +17,12 @@ export class ShopSchedulingService {
     return this.storageService.getItemByIdOff(KEY_STORAGE, idOff);
   }
 
-  findAll() : Promise<ShopScheduling[]> {
-    return this.storageService.getItems(KEY_STORAGE);     
+  async findAll(shopIdOff: string) : Promise<ShopScheduling[]> {
+    const items = await this.storageService.getItems(KEY_STORAGE) as ShopScheduling[];
+    return items.filter(x => x.shopIdOff === shopIdOff);      
   }
 
-  save(entity: ShopScheduling) : Promise<void> {
+  save(entity: ShopScheduling) : Promise<void> {    
     if (entity.idOff) {
       return this.update(entity);
     } else {      

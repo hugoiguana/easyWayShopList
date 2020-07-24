@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { ShopSchedulingListPage } from './shop-scheduling-list.page';
+import { ShopSchedulingAddPage } from './shop-scheduling-add.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: ShopSchedulingListPage
+    component: ShopSchedulingAddPage
+  },
+  {
+    path: ':idOff',
+    component: ShopSchedulingAddPage
   }
 ];
 
@@ -14,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ShopscheduleListPageRoutingModule {}
+export class ShopSchedulingAddPageRoutingModule {}
