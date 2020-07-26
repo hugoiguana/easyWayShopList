@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>      
+      <ion-icon name="add-circle-outline"></ion-icon>
+      Produto
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>     
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="stacked">Descrição</ion-label>
+      <ion-input [(ngModel)]="name" name="name" autocapitalize="on" autofocus="true" clearInput required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Valor unitário</ion-label>
+      <ion-input [(ngModel)]="price" name="price" type="decimal" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Quantidade</ion-label>
+      <ion-input [(ngModel)]="quantity" name="quantity" type="number" required></ion-input>
+    </ion-item>
+
+    <div class="ion-margin-vertical">
+      <ion-button type="submit" color="secondary" expand="block">Salvar</ion-button>
+    </div>
+  </form>
+
+</ion-content>

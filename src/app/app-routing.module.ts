@@ -26,8 +26,15 @@ const routes: Routes = [
   {
     path: 'shop-scheduling/:shopIdOff/add',
     loadChildren: () => import('./page/shop-scheduling/shop-scheduling-add/shop-scheduling-add.module').then( m => m.ShopSchedulingAddPageModule)
+  },  
+  {
+    path: 'product/:idOffShopScheduling',
+    loadChildren: () => import('./page/product/product-list/product-list.module').then( m => m.ProductListPageModule)
   },
-
+  {
+    path: 'product/:idOffShopScheduling/add',
+    loadChildren: () => import('./page/product/product-add/product-add.module').then( m => m.ProductAddPageModule)
+  },
 
 ];
 

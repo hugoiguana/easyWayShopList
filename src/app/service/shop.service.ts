@@ -30,11 +30,14 @@ export class ShopService {
     }
   }
 
-  private create(entity: Shop) : Promise<void> {        
+  private create(entity: Shop) : Promise<void> {       
+    entity.dtCriation = new Date();
+    entity.dtModification = new Date();     
     return this.storageService.addItem(KEY_STORAGE, entity);
   }
   
   private update(entity: Shop) : Promise<void> {
+    entity.dtModification = new Date();    
     return this.storageService.updateItem(KEY_STORAGE, entity);
   }
 

@@ -21,8 +21,8 @@ export class ShopSchedulingAddPage implements OnInit {
 
   constructor(private router: Router
     , private route: ActivatedRoute
-    , private service : ShopSchedulingService
-    , private loading: LoadingService) { 
+    , private loading: LoadingService
+    , private service : ShopSchedulingService) { 
   }
 
   ngOnInit() {

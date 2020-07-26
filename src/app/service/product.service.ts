@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
 
 import { StorageService } from './storage.service';
-import { ShopScheduling } from '../model/shop-scheduling';
+import { Product } from '../model/product';
 
-const KEY_STORAGE = "shopscheduling-storage";
+const KEY_STORAGE = "product-storage";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ShopSchedulingService {
+export class ProductService {
+
 
   constructor(private storageService: StorageService) {     
   }
 
-  findByIdOff(idOff: string) : Promise<ShopScheduling> {
+  findByIdOff(idOff: string) : Promise<Product> {
     return this.storageService.getItemByIdOff(KEY_STORAGE, idOff);
   }
 
-  async findAll(shopIdOff: string) : Promise<ShopScheduling[]> {
-    const items = await this.storageService.getItems(KEY_STORAGE) as ShopScheduling[];
-    return items.filter(x => x.shopIdOff === shopIdOff);      
+  async findAll(idOffShopScheduling: string) : Promise<Product[]> {
+    const items = await this.storageService.getItems(KEY_STORAGE) as Product[];
+    return items.filter(x => x.idOffShopScheduling === idOffShopScheduling);      
   }
 
-  save(entity: ShopScheduling) : Promise<void> {    
+  save(entity: Product) : Promise<void> {    
     if (entity.idOff) {
       return this.update(entity);
     } else {      
@@ -30,14 +31,14 @@ export class ShopSchedulingService {
     }
   }
 
-  private create(entity: ShopScheduling) : Promise<void> {     
+  private create(entity: Product) : Promise<void> {        
     entity.dtCriation = new Date();
-    entity.dtModification = new Date();       
+    entity.dtModification = new Date();      
     return this.storageService.addItem(KEY_STORAGE, entity);
   }
   
-  private update(entity: ShopScheduling) : Promise<void> {
-    entity.dtModification = new Date();    
+  private update(entity: Product) : Promise<void> {
+    entity.dtModification = new Date();  
     return this.storageService.updateItem(KEY_STORAGE, entity);
   }
 

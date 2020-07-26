@@ -25,13 +25,17 @@ export class StorageService {
 
   async getItems<T>(key: string) : Promise<T[]> {
     const ret = await Storage.get({ key: key });
+    if(!ret.value) {
+      return [];
+    }
     return JSON.parse(ret.value);
   }
 
   async addItem(key: string, item: Persistent) : Promise<void> {   
     if (!item.idOff) {
-      item.idOff = uuidv4();
+      item.idOff = uuidv4();      
     }
+
     Storage.get({ key: key }).then(i => {
       let items: Persistent[] = JSON.parse(i.value);
       if (!items) {

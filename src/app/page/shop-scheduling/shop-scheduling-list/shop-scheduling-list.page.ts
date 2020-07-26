@@ -34,7 +34,7 @@ export class ShopSchedulingListPage implements OnInit {
   }
 
   onClick(idOff: string) {    
-    this.router.navigate(['shop-scheduling', 'add', this.shopIdOff, idOff]);   
+    this.router.navigate(['product', idOff]);   
   }
   
   async delete(idOff: string) {          
