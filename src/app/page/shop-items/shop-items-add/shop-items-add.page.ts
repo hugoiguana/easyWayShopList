@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { ShopItemsService } from 'src/app/service/shop-items.service';
 import { ShopItems } from 'src/app/model/shop-items';
+import { ModalController } from '@ionic/angular';
+import { ProductModalSearchbarComponent } from 'src/app/components/product/product-modal-searchbar/product-modal-searchbar.component';
 
 @Component({
   selector: 'app-shop-items-add',
@@ -36,6 +38,7 @@ export class ShopItemsAddPage implements OnInit {
   constructor(private router: Router
     , private route: ActivatedRoute
     , private loading: LoadingService
+    , private modalController: ModalController
     , private service: ShopItemsService) { }
 
 
@@ -67,6 +70,13 @@ export class ShopItemsAddPage implements OnInit {
         this.loading.hide();
         this.router.navigate(['shop-items', this.idOffShopScheduling]);      
       });
+    }
+
+    async showProductModal() {
+      const modal = await this.modalController.create({
+        component: ProductModalSearchbarComponent
+      });
+      modal.present();
     }
 
   
