@@ -34,7 +34,7 @@ export class ShopSchedulingListPage implements OnInit {
   }
 
   onClick(idOff: string) {    
-    this.router.navigate(['product', idOff]);   
+    this.router.navigate(['shop-items', idOff]);   
   }
   
   async delete(idOff: string) {          

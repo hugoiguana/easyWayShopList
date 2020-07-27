@@ -16,15 +16,7 @@
     <ion-item>
       <ion-label position="stacked">Descrição</ion-label>
       <ion-input [(ngModel)]="name" name="name" autocapitalize="on" autofocus="true" clearInput required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Valor unitário</ion-label>
-      <ion-input [(ngModel)]="price" name="price" type="decimal" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Quantidade</ion-label>
-      <ion-input [(ngModel)]="quantity" name="quantity" type="number" required></ion-input>
-    </ion-item>
+    </ion-item>  
 
     <div class="ion-margin-vertical">
       <ion-button type="submit" color="secondary" expand="block">Salvar</ion-button>

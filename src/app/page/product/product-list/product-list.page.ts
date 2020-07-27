@@ -45,7 +45,7 @@ export class ProductListPage implements OnInit {
 
 async loadItems() {
  await this.loading.show();
-  this.service.findAll(this.idOffShopScheduling).then(i => {
+  this.service.findAll().then(i => {
     const itemsOrder = i as Product[];
     this.items = _.orderBy(itemsOrder, 'name', 'asc');
     this.loading.hide();
