@@ -88,14 +88,10 @@ export class ShopItemsAddPage implements OnInit {
       this.shopItems.idOff = this.idOff;
       this.shopItems.idOffShopScheduling = this.idOffShopScheduling;    
 
-      this.shopItems.product = _.find(this.allProducts, x => {
-        return x.idOff === this.shopItems.product.idOff
-      });
-
       this.service.save(this.shopItems).then(x => {
         this.loading.hide();
         this.router.navigate(['shop-items', this.idOffShopScheduling]);      
-      });
+      }); 
     }
   
 }
