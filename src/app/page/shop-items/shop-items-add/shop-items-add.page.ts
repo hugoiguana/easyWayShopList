@@ -47,8 +47,7 @@ export class ShopItemsAddPage implements OnInit {
       });
 
       this.productService.findAll().then(products => {
-        this.allProducts = products;
-        this.allProducts = _.orderBy(this.allProducts, 'name', 'asc');
+        this.allProducts = _.orderBy(products, 'name', 'asc');
         this.products = this.allProducts;
 
         this.route.queryParamMap.subscribe(p => {

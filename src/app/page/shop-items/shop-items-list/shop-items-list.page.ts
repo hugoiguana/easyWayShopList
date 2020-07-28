@@ -50,15 +50,6 @@ export class ShopItemsListPage implements OnInit {
           //this.loading.hide();          
         });
     }
-
-    
-    calculateTotalPriceAllItems(items: ShopItems[]) {
-      if (items && !_.isEmpty(items)) {
-        this.totalPriceAllItems = _.reduce(items, function(x, product) {
-          return x + product.price * product.quantity;
-        }, 0);
-      }
-    }
     
     filterItem(event) {
       const itemSearch = event.target.value;
@@ -78,7 +69,17 @@ export class ShopItemsListPage implements OnInit {
     orderItemsByProductCategoryName(items: ShopItems[]) : ShopItems[] {
       return _.orderBy(items, 'product.category.name', 'desc');
     }
-    
+
+    calculateTotalPriceAllItems(items: ShopItems[]) {
+      if (items && !_.isEmpty(items)) {
+        this.totalPriceAllItems = _.reduce(items, function(x, product) {
+          return x + product.price * product.quantity;
+        }, 0);
+      } else {
+        this.totalPriceAllItems = 0;
+      }
+    }
+
     ionViewDidEnter() {
       this.loadItems();
     }
