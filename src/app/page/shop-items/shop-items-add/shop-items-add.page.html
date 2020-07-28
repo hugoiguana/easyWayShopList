@@ -1,7 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>      
-      <!-- <ion-icon name="add-circle-outline"></ion-icon> -->
       Novo Item
     </ion-title>
     <ion-buttons slot="start">
@@ -22,7 +21,6 @@
       <ion-row>
         <ion-col size="11">
           <ion-item>
-            <!-- <ion-label>Produto</ion-label> -->
             <ion-select [(ngModel)]="shopItems.product" id="idOffProduct" name="idOffProduct" #product="ngModel"
               interface="popover" placeholder="Selecione um Produto">
                 <ion-select-option *ngFor="let product of products" [value]="product">
@@ -49,7 +47,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">Observações</ion-label>
-      <ion-textarea [(ngModel)]="comments" name="comments" autocapitalize="on" autofocus="true" clearInput></ion-textarea>
+      <ion-textarea [(ngModel)]="shopItems.comments" name="comments" autocapitalize="on" autofocus="true" clearInput></ion-textarea>
     </ion-item>    
 
     <div class="ion-margin-vertical">
