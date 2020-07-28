@@ -47,9 +47,9 @@ export class ProductAddPage implements OnInit {
           }
         });
 
-        this.categoryService.findAll().then(x => {
-          this.allCategories = x;
-          this.categories = x;
+        this.categoryService.findAll().then(categories => {
+          this.allCategories = _.orderBy(categories, 'name', 'asc');
+          this.categories = this.allCategories;
         });
 
       });  
