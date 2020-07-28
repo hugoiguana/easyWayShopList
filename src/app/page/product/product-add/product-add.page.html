@@ -23,10 +23,11 @@
         <ion-col size="11">
           <div>
             <ion-item>
-              <!-- <ion-label>Categoria</ion-label> -->
-              <ion-select [(ngModel)]="product.category.idOff" id="idOffCategory" name="idOffCategory" #category="ngModel" required
-              interface="popover" placeholder="Selecione uma Categoria">
-                  <ion-select-option *ngFor="let category of categories" value="{{ category.idOff }}">{{ category.name }}</ion-select-option>
+              <ion-select [(ngModel)]="product.category" id="idOffCategory" name="idOffCategory" #category="ngModel" 
+                required interface="popover" placeholder="Selecione uma Categoria">
+                  <ion-select-option *ngFor="let category of categories" [value]="category">
+                    {{ category.name }}
+                  </ion-select-option>
               </ion-select>        
             </ion-item>  
           </div>

@@ -48,10 +48,12 @@ export class ShopItemsAddPage implements OnInit {
 
       this.productService.findAll().then(products => {
         this.allProducts = products;
+        this.allProducts = _.orderBy(this.allProducts, 'name', 'asc');
         this.products = this.allProducts;
 
         this.route.queryParamMap.subscribe(p => {
-          this.shopItems.product.idOff = p.get('idOffProduct');
+          const idOffProduct = p.get('idOffProduct');
+          this.shopItems.product = this.allProducts.find(p => { return p.idOff === idOffProduct});
         });
       });
 

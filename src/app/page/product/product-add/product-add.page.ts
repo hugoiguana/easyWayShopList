@@ -83,11 +83,6 @@ export class ProductAddPage implements OnInit {
 
     async onSubmit() {
       await this.loading.show();      
-
-      this.product.category = _.find(this.allCategories, x => {
-        return x.idOff === this.product.category.idOff
-      });
-
       this.service.save(this.product).then(product => {
         this.loading.hide();
         this.navigateTo(product);        
