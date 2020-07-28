@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Plugins } from '@capacitor/core';
 import { v4 as uuidv4} from 'uuid';
+import * as _ from 'lodash';
 
 import { Persistent } from '../model/persistent';
 
@@ -35,15 +36,31 @@ export class StorageService {
     if (!item.idOff) {
       item.idOff = uuidv4();      
     }
-
-    Storage.get({ key: key }).then(i => {
+    Storage.get({ key: key }).then(i => {      
       let items: Persistent[] = JSON.parse(i.value);
       if (!items) {
         items = [];
       }
-      items.push(item);      
+      items.push(item);  
       return Storage.set({key: key, value: JSON.stringify(items)});
     });
+  }
+
+  async addItems(key: string, items: Persistent[]) : Promise<void> {   
+    items = items.map(i => {
+      if (!i.idOff) {
+        i.idOff = uuidv4();      
+      }
+      return i;
+    });
+
+    Storage.get({ key: key }).then(i => {
+      let itemsPersisted: Persistent[] = JSON.parse(i.value);
+      if (itemsPersisted && !_.isEmpty(itemsPersisted)) {
+        items = items.concat(itemsPersisted);
+      }
+    });  
+    return Storage.set({key: key, value: JSON.stringify(items)});
   }
 
   async updateItem(key: string, item: Persistent) : Promise<void> {  

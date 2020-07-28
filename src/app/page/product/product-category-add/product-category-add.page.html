@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>      
+      Nova categoria
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>     
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="stacked">Descrição</ion-label>
+      <ion-input [(ngModel)]="productCategory.name" id="name" name="name"  #name="ngModel" autocapitalize="on" autofocus="true" clearInput required></ion-input>
+    </ion-item>
+    <div class="ion-margin-vertical">
+      <ion-button type="submit" color="secondary" expand="block" [disabled]="name.invalid">
+        Salvar
+      </ion-button>
+    </div>
+  </form>
+
+</ion-content>

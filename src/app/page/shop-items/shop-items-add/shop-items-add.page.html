@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>      
-      <ion-icon name="add-circle-outline"></ion-icon>
+      <!-- <ion-icon name="add-circle-outline"></ion-icon> -->
       Novo Item
     </ion-title>
     <ion-buttons slot="start">
@@ -14,7 +14,7 @@
 
   <form (ngSubmit)="onSubmit()">
 
-    <ion-searchbar [(ngModel)]="productNameSearch" name="productNameSearch" (ionInput)="filterProductName($event)" 
+    <ion-searchbar id="productNameSearch" name="productNameSearch" (ionInput)="filterProductName($event)" 
         showCancelButton="focus" placeholder="Filtrar Produto">      
     </ion-searchbar>
 
@@ -24,7 +24,7 @@
           <div>
             <ion-item>
               <ion-label>Produto</ion-label>
-              <ion-select [(ngModel)]="shopItems.product.idOff" name="idOffProduct" interface="popover">
+              <ion-select [(ngModel)]="shopItems.product.idOff" id="idOffProduct" name="idOffProduct" #product="ngModel" interface="popover">
                   <ion-select-option *ngFor="let product of products" value="{{ product.idOff }}">{{ product.name }}</ion-select-option>
               </ion-select>        
             </ion-item>  
@@ -35,21 +35,22 @@
             <ion-icon name="add-circle-sharp" color="secondary" (click)="openProductAddPage()" style="zoom:2.0;"></ion-icon>
           </div>
         </ion-col>
-      </ion-row>
-      
+      </ion-row>      
     </ion-grid>
 
     <ion-item>
       <ion-label position="stacked">Valor unitário</ion-label>
-      <ion-input [(ngModel)]="shopItems.price" name="price" inputmode="decimal" required></ion-input>
+      <ion-input [(ngModel)]="shopItems.price" name="price" inputmode="decimal" #price="ngModel" required></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Quantidade</ion-label>
-      <ion-input [(ngModel)]="shopItems.quantity" name="quantity" type="number" min="0" required></ion-input>
+      <ion-input [(ngModel)]="shopItems.quantity" name="quantity" type="number" min="0" #quantity="ngModel" required></ion-input>
     </ion-item>
 
     <div class="ion-margin-vertical">
-      <ion-button type="submit" color="secondary" expand="block">Salvar</ion-button>
+      <ion-button type="submit" color="secondary" expand="block" [disabled]="product.invalid || price.invalid || quantity.invalid">
+        Salvar
+      </ion-button>
     </div>
   </form>
 

@@ -4,11 +4,12 @@ import { ProductCategory } from './product-category';
 export class Product extends Persistent {
 
     name: string;
-    idCategory: string;
     category: ProductCategory    
 
     static empty() : Product {
-        return new Product();
+        let p = new Product();
+        p.category = ProductCategory.empty();
+        return p;
     }
 
     static of(idOff?: string, name?: string) : Product {

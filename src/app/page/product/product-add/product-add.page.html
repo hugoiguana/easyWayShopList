@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>      
-      <ion-icon name="add-circle-outline"></ion-icon>
+      <!-- <ion-icon name="add-circle-outline"></ion-icon> -->
       Produto
     </ion-title>
     <ion-buttons slot="start">
@@ -13,13 +13,41 @@
 <ion-content class="ion-padding">
 
   <form (ngSubmit)="onSubmit()">
+
+    <ion-searchbar id="categoryNameSearch" name="categoryNameSearch" (ionInput)="filterCategory($event)" 
+        showCancelButton="focus" placeholder="Filtrar Categoria">      
+    </ion-searchbar>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="11">
+          <div>
+            <ion-item>
+              <!-- <ion-label>Categoria</ion-label> -->
+              <ion-select [(ngModel)]="product.category.idOff" id="idOffCategory" name="idOffCategory" #category="ngModel" required
+              interface="popover" placeholder="Selecione uma Categoria">
+                  <ion-select-option *ngFor="let category of categories" value="{{ category.idOff }}">{{ category.name }}</ion-select-option>
+              </ion-select>        
+            </ion-item>  
+          </div>
+        </ion-col>
+        <ion-col size="1" class="ion-align-self-center">
+          <div>
+            <ion-icon name="add-circle-sharp" color="secondary" (click)="openCategoryAddPage()" style="zoom:2.0;"></ion-icon>
+          </div>
+        </ion-col>
+      </ion-row>      
+    </ion-grid>
+
     <ion-item>
       <ion-label position="stacked">Descrição</ion-label>
-      <ion-input [(ngModel)]="name" name="name" autocapitalize="on" autofocus="true" clearInput required></ion-input>
+      <ion-input [(ngModel)]="product.name" name="name" autocapitalize="on" autofocus="true" clearInput required #name="ngModel"></ion-input>
     </ion-item>  
 
     <div class="ion-margin-vertical">
-      <ion-button type="submit" color="secondary" expand="block">Salvar</ion-button>
+      <ion-button type="submit" color="secondary" expand="block" [disabled]="category.invalid || name.invalid">
+        Salvar
+      </ion-button>
     </div>
   </form>
 
