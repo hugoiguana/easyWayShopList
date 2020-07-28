@@ -51,6 +51,10 @@ export class ShopItemsAddPage implements OnInit {
         this.productService.findAll().then(products => {
           this.allProducts = products;
           this.products = this.allProducts;
+
+          this.route.queryParamMap.subscribe(p => {
+            this.shopItems.product.idOff = p.get('idOffProduct');
+          });
         });
 
       });
@@ -59,7 +63,7 @@ export class ShopItemsAddPage implements OnInit {
     }
       
     async openProductAddPage() {
-      this.router.navigate(['product', 'add']);
+      this.router.navigate(['product', 'add'], { queryParams: { idOffShopScheduling: this.idOffShopScheduling } });
     }
     
     filterProductName(event) {

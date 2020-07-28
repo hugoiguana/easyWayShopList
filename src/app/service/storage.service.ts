@@ -32,7 +32,7 @@ export class StorageService {
     return JSON.parse(ret.value);
   }
 
-  async addItem(key: string, item: Persistent) : Promise<void> {   
+  async addItem<T extends Persistent>(key: string, item: T) : Promise<T> {   
     if (!item.idOff) {
       item.idOff = uuidv4();      
     }
@@ -42,8 +42,11 @@ export class StorageService {
         items = [];
       }
       items.push(item);  
-      return Storage.set({key: key, value: JSON.stringify(items)});
+      Storage.set({key: key, value: JSON.stringify(items)});      
     });
+
+    const promiseReturnEntity = ms => new Promise<T>(resolve => resolve(item));
+    return promiseReturnEntity(item);
   }
 
   async addItems(key: string, items: Persistent[]) : Promise<void> {   
@@ -63,7 +66,7 @@ export class StorageService {
     return Storage.set({key: key, value: JSON.stringify(items)});
   }
 
-  async updateItem(key: string, item: Persistent) : Promise<void> {  
+  async updateItem<T extends Persistent>(key: string, item: T) : Promise<T> {  
     await this.deleteItem(key, item.idOff);
     return this.addItem(key, item);  
   }

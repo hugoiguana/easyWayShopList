@@ -23,7 +23,7 @@ export class ProductService {
     return items;      
   }
 
-  save(entity: Product) : Promise<void> {    
+  save(entity: Product) : Promise<Product> {    
     if (entity.idOff) {
       return this.update(entity);
     } else {      
@@ -31,13 +31,13 @@ export class ProductService {
     }
   }
 
-  private create(entity: Product) : Promise<void> {        
+  private create(entity: Product) : Promise<Product> {        
     entity.dtCriation = new Date();
     entity.dtModification = new Date();      
-    return this.storageService.addItem(KEY_STORAGE, entity);
+    return this.storageService.addItem<Product>(KEY_STORAGE, entity);
   }
   
-  private update(entity: Product) : Promise<void> {
+  private update(entity: Product) : Promise<Product> {
     entity.dtModification = new Date();  
     return this.storageService.updateItem(KEY_STORAGE, entity);
   }

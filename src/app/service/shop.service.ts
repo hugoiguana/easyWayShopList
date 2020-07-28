@@ -22,7 +22,7 @@ export class ShopService {
     return this.storageService.getItems(KEY_STORAGE);     
   }
 
-  save(entity: Shop) : Promise<void> {
+  save(entity: Shop) : Promise<Shop> {
     if (entity.idOff) {
       return this.update(entity);
     } else {      
@@ -30,13 +30,13 @@ export class ShopService {
     }
   }
 
-  private create(entity: Shop) : Promise<void> {       
+  private create(entity: Shop) : Promise<Shop> {       
     entity.dtCriation = new Date();
     entity.dtModification = new Date();     
     return this.storageService.addItem(KEY_STORAGE, entity);
   }
   
-  private update(entity: Shop) : Promise<void> {
+  private update(entity: Shop) : Promise<Shop> {
     entity.dtModification = new Date();    
     return this.storageService.updateItem(KEY_STORAGE, entity);
   }

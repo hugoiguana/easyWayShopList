@@ -22,7 +22,7 @@ export class ShopSchedulingService {
     return items.filter(x => x.shopIdOff === shopIdOff);      
   }
 
-  save(entity: ShopScheduling) : Promise<void> {    
+  save(entity: ShopScheduling) : Promise<ShopScheduling> {    
     if (entity.idOff) {
       return this.update(entity);
     } else {      
@@ -30,13 +30,13 @@ export class ShopSchedulingService {
     }
   }
 
-  private create(entity: ShopScheduling) : Promise<void> {     
+  private create(entity: ShopScheduling) : Promise<ShopScheduling> {     
     entity.dtCriation = new Date();
     entity.dtModification = new Date();       
     return this.storageService.addItem(KEY_STORAGE, entity);
   }
   
-  private update(entity: ShopScheduling) : Promise<void> {
+  private update(entity: ShopScheduling) : Promise<ShopScheduling> {
     entity.dtModification = new Date();    
     return this.storageService.updateItem(KEY_STORAGE, entity);
   }

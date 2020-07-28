@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import * as _ from 'lodash';
 
 import { LoadingService } from 'src/app/service/common/loading.service';
@@ -22,6 +22,8 @@ export class ProductAddPage implements OnInit {
   allCategories : ProductCategory[];
   categories : ProductCategory[];
 
+  idOffShopScheduling: string;
+
   constructor(private router: Router
     , private route: ActivatedRoute
     , private loading: LoadingService
@@ -32,8 +34,12 @@ export class ProductAddPage implements OnInit {
 
       this.product = Product.empty();      
 
-      this.route.paramMap.subscribe(params => {
-        this.idOff = params.get('idOff');      
+      this.route.queryParamMap.subscribe(p => {
+          this.idOffShopScheduling = p.get('idOffShopScheduling');
+      });
+
+      this.route.paramMap.subscribe(p => {
+        this.idOff = p.get('idOff');      
   
         this.service.findByIdOff(this.idOff).then(x => {
           if (x) {
@@ -82,10 +88,19 @@ export class ProductAddPage implements OnInit {
         return x.idOff === this.product.category.idOff
       });
 
-      this.service.save(this.product).then(x => {
+      this.service.save(this.product).then(product => {
         this.loading.hide();
-        this.router.navigate(['product']);      
+        this.navigateTo(product);        
       });
+
+    }
+
+    navigateTo(product: Product) {
+      if (this.idOffShopScheduling) {
+        this.router.navigate(['shop-items', this.idOffShopScheduling, 'add'], { queryParams: { idOffProduct: product.idOff } });      
+      } else {
+        this.router.navigate(['product']);      
+      }
     }
 
 }
