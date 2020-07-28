@@ -15,7 +15,28 @@
   <ion-list>
     <ion-item-sliding *ngFor="let item of items" >
       <ion-item button (click)="onClick(item.idOff)">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="8" class="ion-no-margin-vertical ion-no-padding-vertical">
+              <p class="title-item">
+                <ion-icon name="calendar-outline"></ion-icon>
+                {{ item.dtScheduling | date: 'dd/MM/yyyy' }}
+              </p>                 
+              <p class="sub-title-item">
+                <ion-icon *ngIf="item.comments" name="document-text-outline"></ion-icon>
+                {{ item.comments }}
+              </p>
+            </ion-col>      
+            <ion-col size="4" class="ion-align-self-center ion-no-margin-vertical ion-no-padding-vertical">
+              <div class="ion-text-right currency-positive">
+                {{ item.valueItems | currency:'R$':'symbol':'0.1-2':'pt-BR' }}
+              </div>
+            </ion-col>             
+          </ion-row>  
+        </ion-grid>
+      </ion-item>
 
+      <!-- <ion-item button (click)="onClick(item.idOff)">
         <ion-grid>
           <ion-row>
             <ion-col size="6" class="ion-justify-content-start ion-no-margin-vertical ion-no-padding-vertical">
@@ -42,8 +63,8 @@
             </ion-col>
           </ion-row>          
         </ion-grid>
+      </ion-item> -->
 
-      </ion-item>
       <ion-item-options side="start">
         <ion-item-option [routerLink]="['add', item.idOff]">
           <ion-icon slot="icon-only" name="create" color="secondary"></ion-icon>

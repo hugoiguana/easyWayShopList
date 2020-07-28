@@ -46,6 +46,10 @@
       <ion-label position="stacked">Quantidade</ion-label>
       <ion-input [(ngModel)]="shopItems.quantity" name="quantity" type="number" min="0" #quantity="ngModel" required></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label position="floating">Observações</ion-label>
+      <ion-textarea [(ngModel)]="comments" name="comments" autocapitalize="on" autofocus="true" clearInput></ion-textarea>
+    </ion-item>    
 
     <div class="ion-margin-vertical">
       <ion-button type="submit" color="secondary" expand="block" [disabled]="product.invalid || price.invalid || quantity.invalid">

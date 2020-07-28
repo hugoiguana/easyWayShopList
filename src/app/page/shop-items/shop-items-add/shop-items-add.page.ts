@@ -30,37 +30,35 @@ export class ShopItemsAddPage implements OnInit {
     , private service: ShopItemsService
     , private productService: ProductService) {
 
-      this.shopItems = ShopItems.empty();
-      this.shopItems.product = Product.empty();
-     }
+      this.shopItems = ShopItems.empty();      
+  }
 
 
-    ngOnInit() {
+  ngOnInit() {
 
-      this.route.paramMap.subscribe(params => {
-        this.idOffShopScheduling = params.get('idOffShopScheduling'); 
-        this.idOff = params.get('idOff');      
-  
-        this.service.findByIdOff(this.idOff).then(x => {
-          if (x) {
-            this.shopItems = x as ShopItems;
-            console.log(this.shopItems)
-          }
-        });
+    this.route.paramMap.subscribe(params => {
+      this.idOffShopScheduling = params.get('idOffShopScheduling'); 
+      this.idOff = params.get('idOff');      
 
-        this.productService.findAll().then(products => {
-          this.allProducts = products;
-          this.products = this.allProducts;
-
-          this.route.queryParamMap.subscribe(p => {
-            this.shopItems.product.idOff = p.get('idOffProduct');
-          });
-        });
-
+      this.service.findByIdOff(this.idOff).then(x => {
+        if (x) {
+          this.shopItems = x as ShopItems;
+        }
       });
 
-      this.products = this.allProducts;  
-    }
+      this.productService.findAll().then(products => {
+        this.allProducts = products;
+        this.products = this.allProducts;
+
+        this.route.queryParamMap.subscribe(p => {
+          this.shopItems.product.idOff = p.get('idOffProduct');
+        });
+      });
+
+    });
+
+    this.products = this.allProducts;  
+  }
       
     async openProductAddPage() {
       this.router.navigate(['product', 'add'], { queryParams: { idOffShopScheduling: this.idOffShopScheduling } });

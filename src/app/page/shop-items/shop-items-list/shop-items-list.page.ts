@@ -44,17 +44,14 @@ export class ShopItemsListPage implements OnInit {
     async loadItems() {
       //await this.loading.show();
         this.service.findAll(this.idOffShopScheduling).then(items => {
-          this.allItems = this.orderItemsByDtCriationDesc(items);
+          this.allItems = this.orderItemsByProductCategoryName(items);
           this.items = this.allItems;
           this.calculateTotalPriceAllItems(this.items);
           //this.loading.hide();          
         });
     }
 
-    orderItemsByDtCriationDesc(items: ShopItems[]) : ShopItems[] {
-      return _.orderBy(items, 'dtCriation', 'desc');
-    }
-
+    
     calculateTotalPriceAllItems(items: ShopItems[]) {
       if (items && !_.isEmpty(items)) {
         this.totalPriceAllItems = _.reduce(items, function(x, product) {
@@ -62,7 +59,7 @@ export class ShopItemsListPage implements OnInit {
         }, 0);
       }
     }
-
+    
     filterItem(event) {
       const itemSearch = event.target.value;
       
@@ -70,12 +67,16 @@ export class ShopItemsListPage implements OnInit {
         this.items = _.values(this.items);
         this.items = this.allItems.filter(item => {
           return (item.product.name.toLowerCase().indexOf(itemSearch.toLowerCase()) > -1)
-                  || (item.product.category.name.toLowerCase().indexOf(itemSearch.toLowerCase()) > -1)
+          || (item.product.category.name.toLowerCase().indexOf(itemSearch.toLowerCase()) > -1)
         });                    
       } else {
         this.items = this.allItems;
       }    
       this.calculateTotalPriceAllItems(this.items);
+    }
+    
+    orderItemsByProductCategoryName(items: ShopItems[]) : ShopItems[] {
+      return _.orderBy(items, 'product.category.name', 'desc');
     }
     
     ionViewDidEnter() {

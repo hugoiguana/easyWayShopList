@@ -7,10 +7,13 @@ export class ShopItems extends Persistent {
     price: number;
     idShopScheduling: string;
     idOffShopScheduling: string;
+    comments: string;
     product: Product;
 
     static empty() : ShopItems {
-        return new ShopItems();
+        let shopItems = new ShopItems();
+        shopItems.product = Product.empty();
+        return shopItems;
     }
 
     static of(idOff?: string) : ShopItems {
