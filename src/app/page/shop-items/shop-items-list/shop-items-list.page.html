@@ -12,9 +12,12 @@
 
 <ion-content>
 
+  <ion-searchbar id="itemSearch" name="itemSearch" (ionInput)="filterItem($event)" showCancelButton="focus" placeholder="Filtrar ítem">      
+  </ion-searchbar>
+
   <ion-list *ngIf="items">
     <ion-item-sliding *ngFor="let item of items" >
-      <ion-item button (click)="onClick(item.idOff)">
+      <ion-item button>
         <ion-grid>
           <ion-row>
             <ion-col size="8" class="ion-no-margin-vertical ion-no-padding-vertical">

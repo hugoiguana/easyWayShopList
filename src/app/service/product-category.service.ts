@@ -43,7 +43,7 @@ export class ProductCategoryService {
     return items;      
   }
 
-  save(entity: ProductCategory) : Promise<void> {    
+  save(entity: ProductCategory) : Promise<ProductCategory> {    
     if (entity.idOff) {
       return this.update(entity);
     } else {      
@@ -51,13 +51,13 @@ export class ProductCategoryService {
     }
   }
 
-  private create(entity: ProductCategory) : Promise<void> {        
+  private create(entity: ProductCategory) : Promise<ProductCategory> {        
     entity.dtCriation = new Date();
     entity.dtModification = new Date();          
     return this.storageService.addItem(KEY_STORAGE, entity);
   }
   
-  private update(entity: ProductCategory) : Promise<void> {
+  private update(entity: ProductCategory) : Promise<ProductCategory> {
     entity.dtModification = new Date();  
     return this.storageService.updateItem(KEY_STORAGE, entity);
   }

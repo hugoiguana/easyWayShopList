@@ -16,6 +16,7 @@ export class ShopItemsListPage implements OnInit {
 
   idOffShopScheduling: string;
   items : ShopItems[] = [];
+  allItems : ShopItems[] = [];
   totalPriceAllItems : number = 0;
 
   constructor(private route: ActivatedRoute
@@ -31,10 +32,6 @@ export class ShopItemsListPage implements OnInit {
       });
     }
   
-    onClick(idOff: string) {    
-      //this.router.navigate(['product', 'add', this.idOffShopScheduling, idOff]);   
-    }
-  
     async delete(idOff: string) {          
       const funcAfterDelete = () => {
         this.service.delete(idOff).then(i => {    
@@ -46,15 +43,40 @@ export class ShopItemsListPage implements OnInit {
   
     async loadItems() {
       //await this.loading.show();
-        this.service.findAll(this.idOffShopScheduling).then(i => {
-          this.items = _.orderBy(i, 'dtCriation', 'desc');
-          //this.loading.hide();
-          this.totalPriceAllItems = _.reduce(this.items, function(x, product) {
-            return x + product.price * product.quantity;
-          }, 0);
-
+        this.service.findAll(this.idOffShopScheduling).then(items => {
+          this.allItems = this.orderItemsByDtCriationDesc(items);
+          this.items = this.allItems;
+          this.calculateTotalPriceAllItems(this.items);
+          //this.loading.hide();          
         });
+    }
+
+    orderItemsByDtCriationDesc(items: ShopItems[]) : ShopItems[] {
+      return _.orderBy(items, 'dtCriation', 'desc');
+    }
+
+    calculateTotalPriceAllItems(items: ShopItems[]) {
+      if (items && !_.isEmpty(items)) {
+        this.totalPriceAllItems = _.reduce(items, function(x, product) {
+          return x + product.price * product.quantity;
+        }, 0);
       }
+    }
+
+    filterItem(event) {
+      const itemSearch = event.target.value;
+      
+      if (itemSearch && itemSearch.trim() != '') {
+        this.items = _.values(this.items);
+        this.items = this.allItems.filter(item => {
+          return (item.product.name.toLowerCase().indexOf(itemSearch.toLowerCase()) > -1)
+                  || (item.product.category.name.toLowerCase().indexOf(itemSearch.toLowerCase()) > -1)
+        });                    
+      } else {
+        this.items = this.allItems;
+      }    
+      this.calculateTotalPriceAllItems(this.items);
+    }
     
     ionViewDidEnter() {
       this.loadItems();
