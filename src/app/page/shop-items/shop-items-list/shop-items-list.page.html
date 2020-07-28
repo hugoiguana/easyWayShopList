@@ -12,16 +12,22 @@
 
 <ion-content>
 
-  <ion-list>
+  <ion-list *ngIf="items">
     <ion-item-sliding *ngFor="let item of items" >
       <ion-item button (click)="onClick(item.idOff)">
-
         <ion-grid>
           <ion-row>
-            <ion-item>
-              <ion-label>{{ item.totalPrice }}</ion-label>
-            </ion-item>
-          </ion-row>         
+            <ion-col size="8" class="ion-no-margin-vertical ion-no-padding-vertical">
+              <p class="title-item">{{ item.product.name }} - {{ item.product.category.name }}</p>                 
+              <p class="sub-title-item">Qtd.: {{ item.quantity }}</p>
+              <p class="sub-title-item">Preço: {{ item.price | currency:'R$':'symbol':'0.1-2':'pt-BR'}}</p>
+            </ion-col>      
+            <ion-col size="4" class="ion-align-self-center ion-no-margin-vertical ion-no-padding-vertical">
+              <div class="ion-text-right currency-positive">
+                {{ item.quantity * item.price | currency:'R$':'symbol':'0.1-2':'pt-BR' }}
+              </div>
+            </ion-col>             
+          </ion-row>  
         </ion-grid>
 
       </ion-item>
@@ -41,5 +47,21 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>  
+
+  <ion-footer class="ion-no-border">
+    <ion-toolbar>
+      <ion-title>
+        <ion-grid>
+          <ion-row>   
+            <ion-col size="12" class="ion-align-self-center ion-no-margin-vertical ion-no-padding-vertical">
+              <div class="ion-text-right currency-positive">
+                Total: {{ totalPriceAllItems | currency:'R$':'symbol':'0.1-2':'pt-BR' }}
+              </div>
+            </ion-col>             
+          </ion-row>  
+        </ion-grid>
+      </ion-title>
+    </ion-toolbar>
+  </ion-footer>
 
 </ion-content>

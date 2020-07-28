@@ -5,7 +5,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { ShopItemsAddPageRoutingModule } from './shop-items-add-routing.module';
 import { ShopItemsAddPage } from './shop-items-add.page';
-import { ProductModalSearchbarComponent } from 'src/app/components/product/product-modal-searchbar/product-modal-searchbar.component';
 
 @NgModule({
   imports: [
@@ -14,7 +13,6 @@ import { ProductModalSearchbarComponent } from 'src/app/components/product/produ
     IonicModule,
     ShopItemsAddPageRoutingModule
   ],
-  declarations: [ShopItemsAddPage, ProductModalSearchbarComponent],
-  entryComponents: [ProductModalSearchbarComponent]
+  declarations: [ShopItemsAddPage]
 })
 export class ShopItemsAddPageModule {}

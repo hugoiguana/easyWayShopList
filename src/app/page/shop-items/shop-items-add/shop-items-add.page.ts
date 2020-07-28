@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { debounceTime, distinctUntilChanged, map, switchMap, debounce } from 'rxjs/operators';
+import { of } from 'rxjs';
+import * as _ from 'lodash';
 
 import { LoadingService } from 'src/app/service/common/loading.service';
 import { ShopItemsService } from 'src/app/service/shop-items.service';
 import { ShopItems } from 'src/app/model/shop-items';
 import { ModalController } from '@ionic/angular';
-import { ProductModalSearchbarComponent } from 'src/app/components/product/product-modal-searchbar/product-modal-searchbar.component';
+import { Product } from 'src/app/model/product';
 
 @Component({
   selector: 'app-shop-items-add',
@@ -14,32 +17,49 @@ import { ProductModalSearchbarComponent } from 'src/app/components/product/produ
 })
 export class ShopItemsAddPage implements OnInit {
   
+  productNameSearch: string;
+
   idOffShopScheduling: string;
   idOff: string;
   idOffProduct: string;
-  productName: string;
-  quantity: number = 0;
-  price: number = 0;
-  totalPrice: number = 0;
+  shopItems: ShopItems;
+  
+  products;
 
-  products = [{
-    idOffProduct : 'aaa',
-    productName : 'Biscoito'
+  allProducts = [{
+    idOff : 'aaa',
+    name : 'Biscoito',    
+    category : {
+      idOff : 'aaa' ,
+      name : 'Lanche'
+    }
   },
   {
-    idOffProduct : 'bbb',
-    productName : 'Macarrão'
+    idOff : 'bbb',
+    name : 'Macarrão',
+    category : {
+      idOff : 'bbb' ,
+      name : 'Almoço'
+    }
   },
   {
-    idOffProduct : 'ccc',
-    productName : 'Feijão'
+    idOff : 'ccc',
+    name : 'Feijão',
+    category : {
+      idOff : 'ccc' ,
+      name : 'Almoço'
+    }
   }];
 
   constructor(private router: Router
     , private route: ActivatedRoute
     , private loading: LoadingService
     , private modalController: ModalController
-    , private service: ShopItemsService) { }
+    , private service: ShopItemsService) {
+
+      this.shopItems = ShopItems.empty();
+      this.shopItems.product = Product.empty();
+     }
 
 
     ngOnInit() {
@@ -48,36 +68,57 @@ export class ShopItemsAddPage implements OnInit {
         this.idOffShopScheduling = params.get('idOffShopScheduling'); 
         this.idOff = params.get('idOff');      
   
+        console.log('idOff', this.idOff)
         this.service.findByIdOff(this.idOff).then(x => {
           if (x) {
-            const entity = x as ShopItems;
-            this.quantity = entity.quantity;
-            this.price = entity.price;
+            this.shopItems = x as ShopItems;
+            console.log(this.shopItems)
           }
         });
       });
-  
+
+      this.products = this.allProducts;  
     }
-  
+      
+    async openProductAddPage() {
+      this.router.navigate(['product', 'add']);
+    }
+    
+    filterProductName(event) {
+      const productName = event.target.value;
+      if (productName && productName.trim() != '') {
+        this.products = _.values(this.products);
+        this.products = this.allProducts.filter(p => {
+          return (p.name.toLowerCase().indexOf(productName.toLowerCase()) > -1)
+        });
+        
+        if (this.products) {          
+          this.products = _.orderBy(this.products, 'name', 'asc');
+          const product = _.first(this.products);
+          this.idOffProduct = product.idOff;
+        }    
+      } else {
+        this.products = this.allProducts;
+      }
+      
+    }
+    
     async onSubmit() {
       await this.loading.show();
-      let shopItems = ShopItems.of(this.idOff); 
-      shopItems.idOffShopScheduling = this.idOffShopScheduling;
-      shopItems.idOffProduct = this.idOffProduct;
-      shopItems.quantity = this.quantity;
-      shopItems.price = this.price;
-      this.service.save(shopItems).then(x => {
+
+      this.shopItems.idOff = this.idOff;
+      this.shopItems.idOffShopScheduling = this.idOffShopScheduling;
+      
+      this.shopItems.product = _.find(this.allProducts, x => {
+        return x.idOff === this.idOffProduct
+      });
+
+      console.log('shopItems = ', this.shopItems); 
+
+      this.service.save(this.shopItems).then(x => {
         this.loading.hide();
         this.router.navigate(['shop-items', this.idOffShopScheduling]);      
       });
     }
-
-    async showProductModal() {
-      const modal = await this.modalController.create({
-        component: ProductModalSearchbarComponent
-      });
-      modal.present();
-    }
-
   
 }

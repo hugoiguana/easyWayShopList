@@ -16,6 +16,7 @@ export class ShopItemsListPage implements OnInit {
 
   idOffShopScheduling: string;
   items : ShopItems[] = [];
+  totalPriceAllItems : number = 0;
 
   constructor(private route: ActivatedRoute
     , private router: Router
@@ -44,12 +45,16 @@ export class ShopItemsListPage implements OnInit {
     } 
   
     async loadItems() {
-    await this.loading.show();
-      this.service.findAll(this.idOffShopScheduling).then(i => {
-        this.items = _.orderBy(i, 'dtCriation', 'desc');
-        this.loading.hide();
-      });
-    }
+      //await this.loading.show();
+        this.service.findAll(this.idOffShopScheduling).then(i => {
+          this.items = _.orderBy(i, 'dtCriation', 'desc');
+          //this.loading.hide();
+          this.totalPriceAllItems = _.reduce(this.items, function(x, product) {
+            return x + product.price * product.quantity;
+          }, 0);
+
+        });
+      }
     
     ionViewDidEnter() {
       this.loadItems();

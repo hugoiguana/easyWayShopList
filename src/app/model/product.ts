@@ -1,10 +1,11 @@
 import { Persistent } from './persistent';
+import { ProductCategory } from './product-category';
 
 export class Product extends Persistent {
 
     name: string;
     idCategory: string;
-    idOffCategory: string;
+    category: ProductCategory    
 
     static empty() : Product {
         return new Product();

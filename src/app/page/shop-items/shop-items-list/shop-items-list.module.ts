@@ -17,4 +17,6 @@ import { ShopItemsListPage } from './shop-items-list.page';
   ],
   declarations: [ShopItemsListPage]
 })
-export class ShopItemsListPageModule {}
+export class ShopItemsListPageModule {
+  
+}
