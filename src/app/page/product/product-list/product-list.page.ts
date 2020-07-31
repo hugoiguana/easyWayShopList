@@ -47,7 +47,6 @@ async loadItems() {
  await this.loading.show();
   this.service.findAll().then(i => {
     this.items = _.orderBy(i, 'name', 'asc');
-    console.log(this.items)
     this.loading.hide();
   });
 }

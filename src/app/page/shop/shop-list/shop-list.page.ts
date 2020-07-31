@@ -27,7 +27,6 @@ export class ShopListPage implements OnInit {
   }
 
   onClick(idOff: string) {
-    console.log('click', idOff)
     this.router.navigate(['shop-scheduling', idOff]);   
   }
   
