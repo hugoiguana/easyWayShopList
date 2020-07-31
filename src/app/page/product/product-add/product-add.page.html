@@ -1,7 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>      
-      <!-- <ion-icon name="add-circle-outline"></ion-icon> -->
       Produto
     </ion-title>
     <ion-buttons slot="start">
@@ -46,7 +45,8 @@
     </ion-item>  
 
     <div class="ion-margin-vertical">
-      <ion-button type="submit" color="secondary" expand="block" [disabled]="category.invalid || name.invalid">
+      <ion-button type="submit" color="secondary" expand="block" 
+        [disabled]="category.invalid || name.invalid">
         Salvar
       </ion-button>
     </div>
